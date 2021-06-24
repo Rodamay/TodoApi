@@ -32,6 +32,14 @@ namespace TodoApi
             services.AddDbContext<TodoContext>(opt =>
                                                opt.UseInMemoryDatabase("TodoList"));
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                builder.WithOrigins("https://localhost:44329")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader());
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -52,6 +60,8 @@ namespace TodoApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
